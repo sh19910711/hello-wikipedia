@@ -21,10 +21,10 @@ import java.util.Map;
  */
 public final class wikipediapagerank {
 	
-	private static final File PAGE_ID_TITLE_SQL_FILE = new File("jawiki-20150512-page.sql.gz");           // Original input file
+	private static final File PAGE_ID_TITLE_SQL_FILE = new File("page.sql.gz");           // Original input file
 	private static final File PAGE_ID_TITLE_RAW_FILE = new File("wikipedia-pagerank-page-id-title.raw");  // For caching
 	
-	private static final File PAGE_LINKS_SQL_FILE = new File("jawiki-20150512-pagelinks.sql.gz");   // Original input file
+	private static final File PAGE_LINKS_SQL_FILE = new File("pagelinks.sql.gz");   // Original input file
 	private static final File PAGE_LINKS_RAW_FILE = new File("wikipedia-pagerank-page-links.raw");  // For caching
 	
 	private static final File PAGERANKS_RAW_FILE = new File("wikipedia-pageranks.raw");
