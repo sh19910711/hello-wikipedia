@@ -8,6 +8,7 @@ group :development do
   gem "rake"
   gem "bundler"
   gem "pry"
+  gem "byebug"
 end
 
 group :test do
