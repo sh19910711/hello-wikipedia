@@ -8,7 +8,7 @@ Mongoid::Config.sessions =
     {default: {hosts: ["localhost:27017"], database: "wikipedia-to-hatebu"}}
   end
 
-require_relative "../models/pagerank"
+require_relative "../models/page"
 
 byebug
 exit
