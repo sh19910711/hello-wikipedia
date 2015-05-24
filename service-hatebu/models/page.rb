@@ -7,6 +7,11 @@ class Page
   field :rank, :type => Float
   field :hatebu, :type => Integer
 
+  index(
+    { :page_id => 1, },
+    { :unique => true },
+  )
+
   def as_json(options = {})
     attrs = super(options)
     attrs.delete "_id"
