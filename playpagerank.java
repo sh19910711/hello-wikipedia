@@ -6,8 +6,9 @@ class playpagerank {
   double[] pageranks;
   Map<String, Integer> idByTitle;
   Map<Integer, String> titleById;
+  int links[];
 
-  void initPageranks() throws IOException {
+  void readPageranks() throws IOException {
     File f = new File("./wikipedia-pageranks.raw");
     pageranks = new double[(int)(f.length() / 8)];
     DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
@@ -16,7 +17,7 @@ class playpagerank {
     }
   }
 
-  void initHash() throws IOException {
+  void readHash() throws IOException {
     File f = new File("./wikipedia-pagerank-page-id-title.raw");
     idByTitle = new HashMap<String, Integer>();
     titleById = new HashMap<Integer, String>();
@@ -27,6 +28,45 @@ class playpagerank {
       idByTitle.put(title, id);
       titleById.put(id, title);
     }
+  }
+
+  void readLinks() throws IOException {
+    File f = new File("./wikipedia-pagerank-page-links.raw");
+    links = PageLinksList.readRawFile(f);
+  }
+
+  Set<Integer> childrens(Integer from) {
+    Set<Integer> res = new TreeSet<Integer>();
+    for ( int i = 0; i < links.length; ) {
+      int dest = links[i];
+      int n = links[i + 1];
+      for ( int j = 0; j < n; ++ j ) {
+        int src = links[i + 2 + j];
+        if ( src == from ) {
+          res.add(Integer.valueOf(dest));
+          break;
+        }
+      }
+      i += n + 2;
+    }
+    return res;
+  }
+
+  Set<Integer> findBySet(Set<Integer> s) {
+    Set<Integer> res = new TreeSet<Integer>();
+    for ( int i = 0; i < links.length; ) {
+      int dest = links[i];
+      int n = links[i + 1];
+      for ( int j = 0; j < n; ++ j ) {
+        int src = links[i + 2 + j];
+        if ( s.contains(src) ) {
+          res.add(dest);
+          break;
+        }
+      }
+      i += n + 2;
+    }
+    return res;
   }
 
   double getPagerank(Integer id) {
@@ -43,19 +83,46 @@ class playpagerank {
   }
 
   playpagerank() throws IOException {
-    initPageranks();
-    initHash();
+    readLinks();
+    readPageranks();
+    readHash();
 
-    int cnt = 0;
-    for ( Map.Entry<Integer, String> e : titleById.entrySet() ) {
-      if ( cnt >= 100 ) break;
-      System.out.println(e.getValue());
-      cnt ++;
+    Integer personListListId = 2093;
+    Set<Integer> personListIds = childrens(personListListId); // OK
+    Set<Integer> personIds = findBySet(personListIds);
+
+    // 日本（id = 1864744）
+
+    ArrayList<entry> entries = new ArrayList<entry>();
+    for ( Integer personId : personIds ) {
+      entries.add(new entry(getPagerank(personId), titleById.get(personId)));
+    }
+    Collections.sort(entries);
+    for ( entry e : entries ) {
+      System.out.println(e.title + "\t" + e.pagerank);
+    }
+  }
+
+  class entry implements Comparable<entry> {
+    public final double pagerank;
+    public final String title;
+
+    entry(double pagerank, String title) {
+      this.pagerank = pagerank;
+      this.title = title;
+    }
+
+    public int compareTo(entry r) {
+      int temp = Double.compare(pagerank, r.pagerank);
+      if ( temp != 0 ) {
+        return temp;
+      }
+      return title.compareTo(r.title);
     }
   }
 
   public static void main(String args[]) throws IOException {
     new playpagerank();
   }
-  
+
 }
