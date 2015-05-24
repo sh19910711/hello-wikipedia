@@ -1,3 +1,4 @@
+require_relative "_mongo_setup"
 require "xmlrpc/client"
 
 MAX_URL = 50
@@ -17,10 +18,12 @@ def hatebu(urls)
   until urls.empty?
     args = urls.shift(MAX_URL)
     client = XMLRPC::Client.new2("http://b.hatena.ne.jp/xmlrpc")
-    res.merge! client.call("bookmark.getCount", *args)
-    sleep 1.5
+    ret = client.call("bookmark.getCount", *args)
+    res.merge! ret
+    p ret
+    sleep 1
   end
-  res
+  url2word res
 end
 
 def url2word(url)
@@ -31,10 +34,18 @@ def url2word(url)
   end
 end
 
-ret = hatebu [
-  "http://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC",
-  "http://ja.wikipedia.org/wiki/%E3%82%A6%E3%82%A3%E3%82%AD%E3%83%9A%E3%83%87%E3%82%A3%E3%82%A2",
-]
+urls = Page.all.map do |page|
+  "http://ja.wikipedia.org/wiki/#{URI.encode page.title}"
+end
+cnt = hatebu(urls)
+Page.all.each do |page|
+  puts "#{page.title} = #{cnt[page.title]}"
+  page.update_attributes :hatebu => cnt[page.title]
+end
 
-p url2word(ret)
+# p hatebu [
+#   "http://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC",
+#   "http://ja.wikipedia.org/wiki/%E3%82%A6%E3%82%A3%E3%82%AD%E3%83%9A%E3%83%87%E3%82%A3%E3%82%A2",
+# ]
+
 
