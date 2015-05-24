@@ -52,13 +52,13 @@ final class PageIdTitleMap {
 						throw new IllegalArgumentException();
 					result.put((String)title, (Integer)id);
 				}
-				System.out.printf("\rParsing %s: %.3f million entries stored...", file.getName(), result.size() / 1000000.0);
+				// System.out.printf("\rParsing %s: %.3f million entries stored...", file.getName(), result.size() / 1000000.0);
 			}
 		} finally {
 			in.close();
 		}
 		
-		System.out.printf("\rParsing %s: %.3f million entries stored... Done (%.2f s)%n", file.getName(), result.size() / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+		// System.out.printf("\rParsing %s: %.3f million entries stored... Done (%.2f s)%n", file.getName(), result.size() / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		return result;
 	}
 	
@@ -74,12 +74,12 @@ final class PageIdTitleMap {
 				if (line == null)
 					break;
 				if (i >= nextPrint) {
-					System.out.printf("\rReading %s: %.1f million entries...", file.getName(), i / 1000000.0);
+					// System.out.printf("\rReading %s: %.1f million entries...", file.getName(), i / 1000000.0);
 					nextPrint += 100000;
 				}
 				result.put(line, new Integer(in.readLine()));
 			}
-			System.out.printf("\rReading %s: %.1f million entries... Done (%.2f s)%n", file.getName(), result.size() / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+			// System.out.printf("\rReading %s: %.1f million entries... Done (%.2f s)%n", file.getName(), result.size() / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		} finally {
 			in.close();
 		}
@@ -95,14 +95,14 @@ final class PageIdTitleMap {
 			int i = 0;
 			for (String title : idByTitle.keySet()) {
 				if (i >= nextPrint) {
-					System.out.printf("\rWriting %s: %.1f million entries...", file.getName(), i / 1000000.0);
+					// System.out.printf("\rWriting %s: %.1f million entries...", file.getName(), i / 1000000.0);
 					nextPrint += 100000;
 				}
 				out.println(title);
 				out.println(idByTitle.get(title));
 				i++;
 			}
-			System.out.printf("\rWriting %s: %.1f million entries... Done (%.2f s)%n", file.getName(), i / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+			// System.out.printf("\rWriting %s: %.1f million entries... Done (%.2f s)%n", file.getName(), i / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		} finally {
 			out.close();
 		}

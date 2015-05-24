@@ -56,12 +56,12 @@ final class PageLinksList {
 					rawlinks[rawlinksLen] = (long)idByTitle.get(destTitle) << 32 | (Integer)srcId;
 					rawlinksLen++;
 				}
-				System.out.printf("\rParsing %s: %.3f million entries stored", file.getName(), rawlinksLen / 1000000.0);
+				// System.out.printf("\rParsing %s: %.3f million entries stored", file.getName(), rawlinksLen / 1000000.0);
 			}
 		} finally {
 			in.close();
 		}
-		System.out.printf("\rParsing %s: %.3f million entries stored. Done (%.2f s)%n", file.getName(), rawlinksLen / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+		// System.out.printf("\rParsing %s: %.3f million entries stored. Done (%.2f s)%n", file.getName(), rawlinksLen / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		
 		Arrays.sort(rawlinks, 0, rawlinksLen);
 		int[] links = new int[1];
@@ -94,12 +94,12 @@ final class PageLinksList {
 			result = new int[in.readInt()];
 			for (int i = 0; i < result.length; i++) {
 				if (i >= nextPrint) {
-					System.out.printf("\rReading %s: %.1f of %.1f million raw items...", file.getName(), i / 1000000.0, result.length / 1000000.0);
+					// System.out.printf("\rReading %s: %.1f of %.1f million raw items...", file.getName(), i / 1000000.0, result.length / 1000000.0);
 					nextPrint += 100000;
 				}
 				result[i] = in.readInt();
 			}
-			System.out.printf("\rReading %s: %.1f of %.1f million raw items... Done (%.2f s)%n", file.getName(), result.length / 1000000.0, result.length / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+			// System.out.printf("\rReading %s: %.1f of %.1f million raw items... Done (%.2f s)%n", file.getName(), result.length / 1000000.0, result.length / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		} finally {
 			in.close();
 		}
@@ -116,13 +116,13 @@ final class PageLinksList {
 			out.writeInt(links.length);
 			for (int link : links) {
 				if (i >= nextPrint) {
-					System.out.printf("\rWriting %s: %.1f of %.1f million raw items...", file.getName(), i / 1000000.0, links.length / 1000000.0);
+					// System.out.printf("\rWriting %s: %.1f of %.1f million raw items...", file.getName(), i / 1000000.0, links.length / 1000000.0);
 					nextPrint += 100000;
 				}
 				out.writeInt(link);
 				i++;
 			}
-			System.out.printf("\rWriting %s: %.1f of %.1f million raw items... Done (%.2f s)%n", file.getName(), i / 1000000.0, links.length / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
+			// System.out.printf("\rWriting %s: %.1f of %.1f million raw items... Done (%.2f s)%n", file.getName(), i / 1000000.0, links.length / 1000000.0, (System.currentTimeMillis() - startTime) / 1000.0);
 		} finally {
 			out.close();
 		}
