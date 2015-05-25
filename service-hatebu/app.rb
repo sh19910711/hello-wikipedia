@@ -1,7 +1,10 @@
 class App < Padrino::Application
 
+  register Padrino::Helpers
+  set :public_folder, "public/"
+
   get :index do
-    "hello"
+    render :main
   end
 
 end
