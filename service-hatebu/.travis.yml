@@ -1,0 +1,30 @@
+# Doc: http://docs.travis-ci.com/user/build-configuration/
+
+language: ruby
+
+rvm:
+  - "2.2.2"
+
+services:
+  - mongodb
+
+before_install:
+  - travis_retry npm install -g gulp bower
+  - npm prune
+  - bower prune
+
+install:
+  - travis_retry npm install
+  - travis_retry bundle install --jobs 4 --path vendor/bundle
+
+script:
+  - bundle exec rake spec
+  - gulp build
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "nNmXCJUx9nj2E3J3fWmsXi6sRMN2xFcKsmUR7YYvcshmj9kTWLuWbc4lpfb5ksnd8dgLJM6mgpSMvaAMWRUU7giEe5XXgNwXqxPbmRFHjiKvLZ7q4FLqjBlGkBBHk0dCHlho+hCSsDAbuljCRuwiGdsmolwEfUphN7DgeS2L/5aNSz/b7GZwovOQ31x9AAErizpiDb2LYh3x7HOoBdcBS9bUG3A4COgtUKVFHZhoAgfXrfVpyM1HLVxdECjnS8KLAmhlKBThGRmsEip8UvrRkEYXj6pNPgIS5cxsM6yijOkdTE7XrWVDcLclBEfojQDA8VZh+QuKgKgrfJSQtZSs6ak8alcf2XWCnI8WQshPrcyjzQAu3TChcaRIhcuzgAlonSZNFmDMcHQ48Y06kQFx/7wlcpf52lGtXgq73+fmYqpsppsvmTQHOfApgwjP3GZaAPTe8rwW+BxQByJOiibECftZO+kM6dqmMI0rVaZ/dX2SrWnsY9W5bHFAG2BPzoB/F6lU2oW2IEvrO4EL0yujMDyGa1rx4mjQJpwrDy4PxLn1hf46Wm9UpSG8/uthncxPbxSq+ymLJAu5ow9FL76wSUeQYL4e64jAwKGBoQCZ0wye2Ut8RhI406iOCCRhRralkQhSSlTn2R+9QwIczyDkpywgic/Rs/l3Hjtc4HGYdUU="
+  app:
+    master: wikipedia-hatebu
+
