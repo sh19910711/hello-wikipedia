@@ -69,7 +69,7 @@ jQuery ->
       .enter()
       .append "circle"
       .on "click", (d)->
-        location.href = "/pages/#{d.page_id}"
+        window.open().location.href = "/pages/#{d.page_id}"
       .attr "cx", 0
       .attr "cy", 0
       .transition()
