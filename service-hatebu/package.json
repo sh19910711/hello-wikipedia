@@ -14,7 +14,9 @@
     "coffee-script": "^1.9.2",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
+    "gulp-sass": "^2.0.1",
     "gulp-webpack": "^1.4.0",
+    "lodash": "^3.9.3",
     "node-libs-browser": "^0.5.2",
     "webpack": "^1.9.9"
   }
