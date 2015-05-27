@@ -1,0 +1,29 @@
+h1 記事に関する情報
+
+div.col-sm-8
+  table.table.table-bordered
+    thead
+      tr
+        td.col-sm-4 項目
+        td.col-sm-8 情報
+
+    tbody
+      tr
+        td 記事タイトル
+        td
+          a href="http://ja.wikipedia.org/wiki/#{@page.title}"
+            | #{@page.title}
+      tr
+        td ページランク値
+        td #{@page.rank}
+
+      tr
+        td はてブ数
+        td #{@page.hatebu}
+
+      tr
+        td はてブ
+        td
+          a href="http://b.hatena.ne.jp/entry/ja.wikipedia.org/wiki/#{URI.encode @page.title}"
+            | リンク
+

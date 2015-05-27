@@ -4,7 +4,7 @@ class App < Padrino::Application
   set :public_folder, "public/"
 
   get :index do
-    render :main
+    render :chart
   end
 
 end

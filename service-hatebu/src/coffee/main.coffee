@@ -18,7 +18,7 @@ jQuery ->
 
   x = d3.time.scale()
     .range [0, CHART_WIDTH - 40]
-  x.domain [5, 1]
+  x.domain [5, 2.5]
 
   y = d3.scale.linear()
     .range [CHART_HEIGHT - 40, 0.1]
@@ -42,8 +42,13 @@ jQuery ->
   # x-axis
   svg.append "g"
     .attr "class", "axis x-axis"
-    .attr "transform", "translate(#{margin}, 0)"
+    .attr "transform", "translate(#{margin}, 3)"
     .call xAxis
+    .append "text"
+      .style "text-anchor", "end"
+      .attr "x", 580
+      .attr "y", -3
+      .text "ページランク（小さいほど良い）"
 
   # y-axis
   svg.append "g"
@@ -58,11 +63,13 @@ jQuery ->
 
   drawChart = (pages)->
 
-    # line
+    # circle
     svg.selectAll "circle"
       .data pages
       .enter()
       .append "circle"
+      .on "click", (d)->
+        location.href = "/pages/#{d.page_id}"
       .attr "cx", 0
       .attr "cy", 0
       .transition()

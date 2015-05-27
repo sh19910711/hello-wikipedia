@@ -6,12 +6,13 @@ html
     script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"
     link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
     script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
-    script src="/js/script.js"
     link rel="stylesheet" href="/css/style.css"
 
   body
     div.container#header
       div.jumbotron
-        h1 Wikipedia and はてブ
+        h1
+          a href="/"
+            | Wikipedia and はてブ
     div.container#contents
       == yield
