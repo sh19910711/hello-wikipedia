@@ -15,7 +15,7 @@ before_install:
 
 install:
   - travis_retry npm install
-  - travis_retry bundle install --jobs 4 --path vendor/bundle
+  - travis_retry bundle install -j4 --path vendor/bundle
 
 script:
   - bundle exec rake spec
