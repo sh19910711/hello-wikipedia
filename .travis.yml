@@ -6,6 +6,5 @@ install:
   - echo nothing
 
 script:
-  - cd ./rank
-  - ../bin/build
+  - ./bin/build
   
