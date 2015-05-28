@@ -1,0 +1,10 @@
+# http://docs.travis-ci.com/user/languages/java/
+
+language: java
+
+install:
+  - echo nothing
+
+script:
+  - ./bin/build
+  
